@@ -451,19 +451,12 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
     var pizzaContainer = document.getElementsByClassName("randomPizzaContainer");
     var length = pizzaContainer.length;
-    var widthContainer = [];
+    var dx = determineDx(pizzaContainer[0], size);
+    var newwidth = (pizzaContainer[0].offsetWidth + dx) + 'px';
+    var widthContainer=[];
     
-
-    if( length <= 0 ) {
-      return ;
-    }
-
-    
-
     for (var i = 0; i < length; i++) {
-      widthContainer.push(pizzaContainer[i].offsetWidth + dx);
-      //var newwidth = (pizzaContainer[i].offsetWidth + dx) + 'px';
-      //pizzaContainer[i].style.width = newwidth;
+      pizzaContainer[i].style.width = newwidth;
     }
 
     for( var j = 0; j < length; j++ ) {
@@ -499,14 +492,14 @@ console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "
 var frame = 0;
 
 // Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
-// function logAverageFrame(times) {   // times is the array of User Timing measurements from updatePositions()
-//   var numberOfEntries = times.length;
-//   var sum = 0;
-//   for (var i = numberOfEntries - 1; i > numberOfEntries - 11; i--) {
-//     sum = sum + times[i].duration;
-//   }
-//   console.log("Average scripting time to generate last 10 frames: " + sum / 10 + "ms");
-// }
+function logAverageFrame(times) {   // times is the array of User Timing measurements from updatePositions()
+  var numberOfEntries = times.length;
+  var sum = 0;
+  for (var i = numberOfEntries - 1; i > numberOfEntries - 11; i--) {
+    sum = sum + times[i].duration;
+  }
+  console.log("Average scripting time to generate last 10 frames: " + sum / 10 + "ms");
+}
 
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
@@ -516,9 +509,8 @@ var frame = 0;
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-
   var items = document.getElementsByClassName('mover');
-  var top = document.body.scrollTop / 1250;
+  var top = (document.body.scrollTop / 1250);
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin(top + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
@@ -533,6 +525,8 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
+
+requestAnimationFrame(updatePositions);
 
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
