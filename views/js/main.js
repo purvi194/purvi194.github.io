@@ -448,15 +448,22 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
+  //Style to be changed once
   function changePizzaSizes(size) {
     var pizzaContainer = document.getElementsByClassName("randomPizzaContainer");
     var length = pizzaContainer.length;
+    var widthContainer = [];
+
+    if( length <= 0 ) {
+      return ;
+    }
+
     var dx = determineDx(pizzaContainer[0], size);
-    var newwidth = (pizzaContainer[0].offsetWidth + dx) + 'px';
-    var widthContainer=[];
-    
+
     for (var i = 0; i < length; i++) {
-      pizzaContainer[i].style.width = newwidth;
+      widthContainer.push(pizzaContainer[i].offsetWidth + dx);
+      //var newwidth = (pizzaContainer[i].offsetWidth + dx) + 'px';
+      //pizzaContainer[i].style.width = newwidth;
     }
 
     for( var j = 0; j < length; j++ ) {
@@ -509,8 +516,9 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
+
   var items = document.getElementsByClassName('mover');
-  var top = (document.body.scrollTop / 1250);
+  var top = document.body.scrollTop / 1250;
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin(top + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
@@ -525,8 +533,6 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
-
-requestAnimationFrame(updatePositions);
 
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
