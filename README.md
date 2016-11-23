@@ -16,7 +16,7 @@ Changes made to increase fps and pizza resizing:-
 
 Instructions:- 
 * Open index.html
-* Select a project to know more
+* Choose a project to know more
 * go to pizzeria.
 * select your favorite pizza!!!
 
