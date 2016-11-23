@@ -472,7 +472,6 @@ var resizePizzas = function(size) {
             var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
             console.log("Time to resize pizzas: " + timeToResize[timeToResize.length - 1].duration + "ms");
         };
-};
 
         window.performance.mark("mark_start_generating"); // collect timing data
 
