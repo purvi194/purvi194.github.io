@@ -461,12 +461,12 @@ var resizePizzas = function(size) {
         }
     }
 
+    changePizzaSizes(size);
+
     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
     for (var i = 0; i < randomPizzas.length; i++) {
         randomPizzas[i].style.width = newwidth + "%";
     }
-
-    changePizzaSizes(size);
 
     // User Timing API is awesome
     window.performance.mark("mark_end_resize");
